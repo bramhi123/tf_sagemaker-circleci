@@ -26,9 +26,9 @@ jobs:
   deploy:
     executor: terraform
     steps:
-      - checkout
-#          path: ~/tf_sagemaker-circleci
-#      - run: ls -la; pwd;  
+      - checkout:
+          path: ~/tf_sagemaker-circleci
+      - run: ls -la; pwd;  
       - run: apk update && apk add bash
       - attach_workspace:
           at: ~/tf_sagemaker-circleci/tf-SageMaker-ML_NOTEBOOK/
