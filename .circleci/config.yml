@@ -3,7 +3,7 @@ executors:
   terraform:
     docker:
       - image: hashicorp/terraform:0.14.2
-    working_directory: ~/tf-SageMaker-ML_MODEL_EndPointConfig_Endpoints
+    working_directory: ~/terraform
 
 jobs:
   build:
@@ -12,12 +12,13 @@ jobs:
       - checkout
       - run: apk update && apk add bash
 #      - run: mkdir plan
+      - run: path "tf-SageMaker-ML_NOTEBOOK"
       - run: terraform init
 #      - run: terraform workspace select $STAGE
 #      - run: .circleci/gateway_deployment.sh
       - run: terraform plan 
       - persist_to_workspace:
-          root: ~/tf-SageMaker-ML_MODEL_EndPointConfig_Endpoints
+          root: ~/terraform
           paths:
             - plan
   deploy:
@@ -26,7 +27,7 @@ jobs:
       - checkout
       - run: apk update && apk add bash
       - attach_workspace:
-          at: ~/tf-SageMaker-ML_MODEL_EndPointConfig_Endpoints
+          at: ~/terraform
       - run: terraform init
 #      - run: terraform workspace select $STAGE
       - run: terraform apply 
