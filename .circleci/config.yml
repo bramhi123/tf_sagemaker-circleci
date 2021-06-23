@@ -13,17 +13,16 @@ jobs:
           path: ~/tf_sagemaker-circleci
       - run: ls -la; pwd;    
       - run: apk update && apk add bash
-#      - run: mkdir plan
+      - run: mkdir plan
       - run: terraform init
 #      - run: terraform workspace select $STAGE
 #      - run: .circleci/gateway_deployment.sh
-      - run: terraform plan 
-      - run: terraform destroy -auto-approve
+      - run: terraform plan -out=plan/tf
       - persist_to_workspace:
           root: . 
           paths:
-             - .
-#            - plan
+#             - .
+            - plan
   deploy:
     executor: terraform
     steps:
@@ -33,10 +32,10 @@ jobs:
       - run: apk update && apk add bash
       - attach_workspace:
           at: ~/tf_sagemaker-circleci/tf-SageMaker-ML_NOTEBOOK/
-#      - run: terraform init
+      - run: terraform init
 #      - run: terraform workspace select $STAGE
 #      - run: terraform destroy -auto-approve
-#      - run: terraform apply -auto-approve
+      - run: terraform apply -auto-approve
 #      - run: .circleci/gateway_deployment.sh
 
 workflows:
