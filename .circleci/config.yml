@@ -32,7 +32,7 @@ jobs:
       - run: apk update && apk add bash
       - attach_workspace:
           at: ~/tf_sagemaker-circleci/tf-SageMaker-ML_NOTEBOOK/
-#      - run: terraform init
+      - run: terraform init
 #      - run: terraform workspace select $STAGE
       - run: terraform destroy -auto-approve
 #      - run: terraform apply -auto-approve
