@@ -10,9 +10,10 @@ jobs:
     executor: terraform
     steps:
       - checkout
+      - run: ls -la
       - run: apk update && apk add bash
 #      - run: mkdir plan
-      - run: cd tf-SageMaker-ML_NOTEBOOK
+      - run: cd /tf-SageMaker-ML_NOTEBOOK
       - run: terraform init
 #      - run: terraform workspace select $STAGE
 #      - run: .circleci/gateway_deployment.sh
