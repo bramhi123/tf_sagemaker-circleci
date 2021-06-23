@@ -11,8 +11,7 @@ jobs:
     executor: terraform
     steps:
       - checkout:  
-#          path: ~/tf_sagemaker-circleci
-          path: "tf_sagemaker-circleci"
+          path: ~/tf_sagemaker-circleci
       - run: ls -la; pwd;    
       - run: apk update && apk add bash
       - run: mkdir plan
