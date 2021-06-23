@@ -5,18 +5,17 @@ executors:
       - image: hashicorp/terraform:0.14.2
     working_directory: ~/tf_sagemaker-circleci
 
-
 jobs:
   build:
     executor: terraform
     steps:
       - checkout
       - run: apk update && apk add bash
-      - run: mkdir plan
+#      - run: mkdir plan
       - run: terraform init
 #      - run: terraform workspace select $STAGE
 #      - run: .circleci/gateway_deployment.sh
-      - run: terraform plan -out=plan/tf
+      - run: terraform plan 
       - persist_to_workspace:
           root: ~/tf_sagemaker-circleci
           paths:
@@ -30,7 +29,7 @@ jobs:
           at: ~/tf_sagemaker-circleci
       - run: terraform init
 #      - run: terraform workspace select $STAGE
-      - run: terraform apply plan/tf
+      - run: terraform apply 
 #      - run: .circleci/gateway_deployment.sh
 
 workflows:
