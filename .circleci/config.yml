@@ -1,32 +1,61 @@
 version: 2.1
-orbs:
-  terraform: "circleci/terraform@2.1.0"
+executors:
+  terraform:
+    docker:
+      - image: hashicorp/terraform:2.1.0
+    working_directory: ~/tf_sagemaker-circleci
+
+jobs:
+  build:
+    executor: terraform
+    steps:
+      - checkout
+      - run: apk update && apk add bash
+      - run: mkdir plan
+      - run: terraform init
+#      - run: terraform workspace select $STAGE
+#      - run: .circleci/gateway_deployment.sh
+      - run: terraform plan -out=plan/tf
+      - persist_to_workspace:
+          root: ~/tf_sagemaker-circleci
+          paths:
+            - plan
+  deploy:
+    executor: terraform
+    steps:
+      - checkout
+      - run: apk update && apk add bash
+      - attach_workspace:
+          at: ~/tf_sagemaker-circleci
+      - run: terraform init
+#      - run: terraform workspace select $STAGE
+      - run: terraform apply plan/tf
+#      - run: .circleci/gateway_deployment.sh
+
 workflows:
-  deploy_infrastructure:
+  version: 2
+  build-only:
     jobs:
-      - terraform/fmt:
-          checkout: true
-          context: myfreeawsaccess
-      - terraform/init:
-          checkout: true
-          context: myfreeawsaccess
-          requires:
-            - terraform/fmt
-      - terraform/plan:
-          checkout: true
-          context: myfreeawsaccess
-          persist-workspace: true
-          requires:
-            - terraform/init
-      - hold-apply:
-          type: approval
-          requires:
-            - terraform/plan
-      - terraform/apply:
-          attach-workspace: true
+      - build:
           context: myfreeawsaccess
           filters:
             branches:
-              only: master
+              ignore:
+                - main
+  build-and-deploy-dev:
+    jobs:
+      - build:
+          context: myfreeawsaccess
+          filters:
+              branches:
+                only:
+                  - main
+      - deploy:
+          context: myfreeawsaccess
           requires:
-            - hold-apply
+            - build
+          filters:
+            branches:
+              only:
+                - main
+  
