@@ -8,10 +8,10 @@ workflows:
     jobs:
     - terraform/validate:
         checkout: true
-        context: terraform
+        context: myfreeawsaccess 
     - terraform/plan:
         checkout: true
-        context: terraform
+        context: myfreeawsaccess
         persist-workspace: true
         requires:
         - terraform/validate
