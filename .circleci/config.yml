@@ -35,8 +35,8 @@ jobs:
           at: ~/tf_sagemaker-circleci/tf-SageMaker-ML_NOTEBOOK/
       - run: terraform init
 #      - run: terraform workspace select $STAGE
-#      - run: terraform destroy -auto-approve
-      - run: terraform apply -auto-approve
+      - run: terraform destroy -auto-approve
+#      - run: terraform apply -auto-approve
 #      - run: .circleci/gateway_deployment.sh
 
 workflows:
