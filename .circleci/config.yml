@@ -19,7 +19,7 @@ jobs:
 #      - run: .circleci/gateway_deployment.sh
       - run: terraform plan 
       - persist_to_workspace:
-          root: ~/terraform
+          root: ~/tf_sagemaker-circleci/tf-SageMaker-ML_NOTEBOOK/
           paths:
             - plan
   deploy:
@@ -28,7 +28,7 @@ jobs:
       - checkout
       - run: apk update && apk add bash
       - attach_workspace:
-          at: ~/terraform
+          at: ~/tf_sagemaker-circleci/tf-SageMaker-ML_NOTEBOOK/
       - run: terraform init
 #      - run: terraform workspace select $STAGE
       - run: terraform apply 
