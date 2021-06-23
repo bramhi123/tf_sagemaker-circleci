@@ -6,6 +6,9 @@ orbs:
 workflows:
   deploy_infra:
     jobs:
+    - terraform/fmt:
+          checkout: true
+          context: myfreeawsaccess
     - terraform/validate:
         checkout: true
         context: myfreeawsaccess 
@@ -17,9 +20,10 @@ workflows:
         - terraform/validate
     - terraform/apply:
         attach-workspace: true
-        context: terraform
+        context: myfreeawsaccess
         filters:
           branches:
-            only: master
+            only: main
         requires:
-        - terraform/plan
+          - terraform/plan
+#          - hold-apply
