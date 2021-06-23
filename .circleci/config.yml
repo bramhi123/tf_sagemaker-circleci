@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run: apk update && apk add bash
 #      - run: mkdir plan
-      - run: path "tf-SageMaker-ML_NOTEBOOK"
+      - run: cd /tf-SageMaker-ML_NOTEBOOK
       - run: terraform init
 #      - run: terraform workspace select $STAGE
 #      - run: .circleci/gateway_deployment.sh
