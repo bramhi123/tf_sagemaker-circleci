@@ -1,36 +1,18 @@
----
-# https://circleci.com/developer/orbs/orb/circleci/terraform
-version: '2.1'
-orbs:
-  terraform: circleci/terraform@2.1.0
-workflows:
-  deploy_infra:
-    jobs:  
-    - terraform/validate:
-      run:
-        command: pwd
-        working_directory: /tf-SageMaker-ML_MODEL_EndPointConfig_Endpoints 
-        terraform init:
-        checkout: true
-        context: myfreeawsaccess 
-    - terraform/plan:
-      run:
-        command: pwd
-        working_directory: /tf-SageMaker-ML_MODEL_EndPointConfig_Endpoints
-        checkout: true
-        context: myfreeawsaccess
-        persist-workspace: true
-        requires:
-        - terraform/validate
-    - terraform/apply:
-      run:
-        command: pwd
-        working_directory: /tf-SageMaker-ML_MODEL_EndPointConfig_Endpoints
-        attach-workspace: true
-        context: myfreeawsaccess
-        filters:
-          branches:
-            only: main
-        requires:
-          - terraform/plan
-#          - hold-apply
+version: 2
+
+jobs:
+  plan-apply:
+    working_directory: /tf-SageMaker-ML_MODEL_EndPointConfig_Endpoints
+    docker:
+      - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
+    steps:
+      - checkout
+      - run:
+          name: terraform init & plan
+          command: |
+            terraform init 
+            terraform plan 
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
