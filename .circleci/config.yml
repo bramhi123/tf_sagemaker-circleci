@@ -3,14 +3,14 @@ executors:
   terraform:
     docker:
       - image: hashicorp/terraform:0.14.2
-    working_directory: ~/tf_sagemaker-circleci
+    working_directory: ~/tf_sagemaker-circleci/
 
 jobs:
   build:
     executor: terraform
     steps:
       - checkout:  
-          path: ~/tf-SageMaker-ML_NOTEBOOK
+          path: ~/tf_sagemaker-circleci/tf-SageMaker-ML_NOTEBOOK
       - run: ls -la; pwd;    
       - run: apk update && apk add bash
       - run: mkdir plan
@@ -27,7 +27,7 @@ jobs:
     executor: terraform
     steps:
       - checkout:
-          path: ~/tf-SageMaker-ML_NOTEBOOK
+          path: ~/tf_sagemaker-circleci/tf-SageMaker-ML_NOTEBOOK
       - run: ls -la; pwd;  
       - run: apk update && apk add bash
       - attach_workspace:
