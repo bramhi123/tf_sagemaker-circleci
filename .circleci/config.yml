@@ -3,7 +3,7 @@ executors:
   terraform:
     docker:
       - image: hashicorp/terraform:0.14.2
-    working_directory: ~/tf_sagemaker-circleci/
+    working_directory: ~/tf_sagemaker-circleci
 
 jobs:
   build:
