@@ -19,7 +19,7 @@ jobs:
 #      - run: .circleci/gateway_deployment.sh
       - run: terraform plan -out=plan/tf
       - persist_to_workspace:
-          root: ~/tf_sagemaker-circleci 
+          root: ~/tf_sagemaker-circleci/tf-SageMaker-ML_NOTEBOOK
           paths:
 #             - .
             - plan
