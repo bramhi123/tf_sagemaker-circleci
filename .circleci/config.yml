@@ -5,20 +5,26 @@ orbs:
   terraform: circleci/terraform@2.1.0
 workflows:
   deploy_infra:
-    jobs:
-    - terraform/fmt:
-          checkout: true
-          context: myfreeawsaccess
+    jobs:  
     - terraform/validate:
+      run:
+        command: pwd
+        working_directory: /tf-SageMaker-ML_MODEL_EndPointConfig_Endpoints 
         checkout: true
         context: myfreeawsaccess 
     - terraform/plan:
+      run:
+        command: pwd
+        working_directory: /tf-SageMaker-ML_MODEL_EndPointConfig_Endpoints
         checkout: true
         context: myfreeawsaccess
         persist-workspace: true
         requires:
         - terraform/validate
     - terraform/apply:
+      run:
+        command: pwd
+        working_directory: /tf-SageMaker-ML_MODEL_EndPointConfig_Endpoints
         attach-workspace: true
         context: myfreeawsaccess
         filters:
