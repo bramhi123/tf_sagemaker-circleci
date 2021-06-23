@@ -5,6 +5,7 @@ executors:
       - image: hashicorp/terraform:2.1.0
     working_directory: ~/tf_sagemaker-circleci
 
+
 jobs:
   build:
     executor: terraform
