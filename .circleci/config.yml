@@ -10,6 +10,7 @@ workflows:
       run:
         command: pwd
         working_directory: /tf-SageMaker-ML_MODEL_EndPointConfig_Endpoints 
+        terraform init:
         checkout: true
         context: myfreeawsaccess 
     - terraform/plan:
